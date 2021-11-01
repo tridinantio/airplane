@@ -15,7 +15,6 @@ class SeatSelectionPage extends StatelessWidget {
 
     Widget seatStatus() {
       return Container(
-        //Test
         margin: EdgeInsets.only(top: 30),
         child: Row(
           children: [
