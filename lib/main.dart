@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:airplane/ui/pages/bonus_page.dart';
+import 'package:airplane/ui/pages/checkout_page.dart';
 import 'package:airplane/ui/pages/detail_page.dart';
 import 'package:airplane/ui/pages/get_started_page.dart';
 import 'package:airplane/ui/pages/main_page.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/main': (context) => MainPage(),
         '/detail': (context) => DetailPage(),
         '/seat-selection': (context) => SeatSelectionPage(),
+        '/checkout': (context) => CheckoutPage(),
       },
     );
   }
