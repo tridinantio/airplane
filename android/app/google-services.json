@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "590288269940",
+    "project_id": "airplane-a0297",
+    "storage_bucket": "airplane-a0297.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590288269940:android:a6cd500c00594258a65721",
+        "android_client_info": {
+          "package_name": "com.tridinantio.airplane"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590288269940-k7n554rhhbalgkqfjjrmg575l4e2ukc6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkgWXRUn-AS81uPTrw8frqkBhemwlTeC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590288269940-k7n554rhhbalgkqfjjrmg575l4e2ukc6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

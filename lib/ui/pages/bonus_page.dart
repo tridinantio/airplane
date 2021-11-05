@@ -106,7 +106,8 @@ class BonusPage extends StatelessWidget {
     Widget startButton() {
       return CustomButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/main');
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/main', (route) => false);
           },
           buttonWidth: 220,
           margin: EdgeInsets.only(

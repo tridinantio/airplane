@@ -35,7 +35,8 @@ class DestinationTile extends StatelessWidget {
               height: 70,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(defaultRadius),
-                  image: DecorationImage(image: AssetImage(imageUrl))),
+                  image: DecorationImage(
+                      image: AssetImage(imageUrl), fit: BoxFit.cover)),
             ),
             SizedBox(
               width: 16,

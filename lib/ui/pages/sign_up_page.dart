@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:airplane/cubit/auth_cubit.dart';
 import 'package:airplane/shared/theme.dart';
 import 'package:airplane/ui/widgets/custom_button.dart';
 import 'package:airplane/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key? key}) : super(key: key);
@@ -13,6 +15,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController nameController = TextEditingController(text: '');
+  final TextEditingController emailController = TextEditingController(text: '');
+  final TextEditingController passwordController =
+      TextEditingController(text: '');
+  final TextEditingController hobbyController = TextEditingController(text: '');
   @override
   Widget build(BuildContext context) {
     Widget title() {
@@ -32,7 +39,9 @@ class _SignUpPageState extends State<SignUpPage> {
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: CustomTextFormField(
-              title: "Full Name", hintText: "Your full name"),
+              controller: nameController,
+              title: "Full Name",
+              hintText: "Your full name"),
         );
       }
 
@@ -41,7 +50,9 @@ class _SignUpPageState extends State<SignUpPage> {
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: CustomTextFormField(
-              title: "Email Address", hintText: "Your email address"),
+              controller: emailController,
+              title: "Email Address",
+              hintText: "Your email address"),
         );
       }
 
@@ -50,6 +61,7 @@ class _SignUpPageState extends State<SignUpPage> {
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: CustomTextFormField(
+            controller: passwordController,
             title: "Password",
             hintText: "Your password",
             obscureText: true,
@@ -61,17 +73,47 @@ class _SignUpPageState extends State<SignUpPage> {
       Widget hobbyForm() {
         return Padding(
           padding: const EdgeInsets.only(bottom: 30),
-          child: CustomTextFormField(title: "Hobby", hintText: "Your hobby"),
+          child: CustomTextFormField(
+            title: "Hobby",
+            hintText: "Your hobby",
+            controller: hobbyController,
+          ),
         );
       }
 
       //SIGN UP BUTTON
       Widget signUpButton() {
         // ignore: sized_box_for_whitespace
-        return CustomButton(
-          buttonName: "Sign Up",
-          onPressed: () {
-            Navigator.pushNamed(context, '/bonus');
+        return BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            // TODO: implement listener
+            if (state is AuthSuccess) {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/bonus', (route) => false);
+            } else if (state is AuthFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: redColor, content: Text(state.error)));
+            }
+          },
+          builder: (context, state) {
+            if (state is AuthLoading) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: primaryColor,
+                ),
+              );
+            }
+
+            return CustomButton(
+              buttonName: "Sign Up",
+              onPressed: () {
+                context.read<AuthCubit>().signUp(
+                    email: emailController.text,
+                    password: passwordController.text,
+                    name: nameController.text,
+                    hobby: hobbyController.text);
+              },
+            );
           },
         );
       }
