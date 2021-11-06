@@ -7,44 +7,32 @@ import 'package:airplane/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignUpPage extends StatefulWidget {
-  SignUpPage({Key? key}) : super(key: key);
+class SignInPage extends StatefulWidget {
+  SignInPage({Key? key}) : super(key: key);
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController nameController = TextEditingController(text: '');
+class _SignInPageState extends State<SignInPage> {
   final TextEditingController emailController = TextEditingController(text: '');
   final TextEditingController passwordController =
       TextEditingController(text: '');
-  final TextEditingController hobbyController = TextEditingController(text: '');
+
   @override
   Widget build(BuildContext context) {
     Widget title() {
       return Container(
         padding: EdgeInsets.only(top: 30),
         child: Text(
-          "Join us and get\nyour next journey",
+          "Sign In and\nstart your journey",
           style: blackTextStyle.copyWith(fontSize: 24, fontWeight: semiBold),
         ),
       );
     }
 
     //SIGN UP FORM
-    Widget signUpForm() {
-      //NAME FORMFIELD
-      Widget nameForm() {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: CustomTextFormField(
-              controller: nameController,
-              title: "Full Name",
-              hintText: "Your full name"),
-        );
-      }
-
+    Widget signInForm() {
       //EMAIL FORMFIELD
       Widget emailForm() {
         return Padding(
@@ -69,27 +57,15 @@ class _SignUpPageState extends State<SignUpPage> {
         );
       }
 
-      //HOBBY FORMFIELD
-      Widget hobbyForm() {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 30),
-          child: CustomTextFormField(
-            title: "Hobby",
-            hintText: "Your hobby",
-            controller: hobbyController,
-          ),
-        );
-      }
-
       //SIGN UP BUTTON
-      Widget signUpButton() {
+      Widget signInButton() {
         // ignore: sized_box_for_whitespace
         return BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             // TODO: implement listener
             if (state is AuthSuccess) {
               Navigator.pushNamedAndRemoveUntil(
-                  context, '/bonus', (route) => false);
+                  context, '/main', (route) => false);
             } else if (state is AuthFailed) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   backgroundColor: redColor, content: Text(state.error)));
@@ -105,13 +81,12 @@ class _SignUpPageState extends State<SignUpPage> {
             }
 
             return CustomButton(
-              buttonName: "Sign Up",
+              buttonName: "Sign In",
               onPressed: () {
-                context.read<AuthCubit>().signUp(
-                    email: emailController.text,
-                    password: passwordController.text,
-                    name: nameController.text,
-                    hobby: hobbyController.text);
+                context.read<AuthCubit>().signIn(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
               },
             );
           },
@@ -126,33 +101,27 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         width: MediaQuery.of(context).size.width - (2 * 24),
         child: Column(
-          children: [
-            nameForm(),
-            emailForm(),
-            passwordForm(),
-            hobbyForm(),
-            signUpButton()
-          ],
+          children: [emailForm(), passwordForm(), signInButton()],
         ),
       );
     }
 
     //TERMS AND CONDITION BUTTON
-    Widget signInButton() {
+    Widget signUpButton() {
       return Align(
         alignment: Alignment.center,
         child: Container(
           padding: EdgeInsets.only(top: 50),
           child: TextButton(
             child: Text(
-              "Already have an account? Sign in",
+              "Do not have an account? Sign up",
               style: greyTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: light,
                   decoration: TextDecoration.underline),
             ),
             onPressed: () {
-              Navigator.pushNamed(context, '/sign-in');
+              Navigator.pushNamed(context, '/sign-up');
             },
           ),
         ),
@@ -170,8 +139,8 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(
               height: 30,
             ),
-            signUpForm(),
-            signInButton()
+            signInForm(),
+            signUpButton()
           ],
         ),
       ),

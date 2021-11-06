@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:airplane/cubit/all_destination_cubit.dart';
 import 'package:airplane/cubit/auth_cubit.dart';
+import 'package:airplane/cubit/destination_cubit.dart';
 import 'package:airplane/cubit/page_cubit.dart';
 import 'package:airplane/ui/pages/bonus_page.dart';
 import 'package:airplane/ui/pages/checkout_page.dart';
@@ -8,6 +10,7 @@ import 'package:airplane/ui/pages/detail_page.dart';
 import 'package:airplane/ui/pages/get_started_page.dart';
 import 'package:airplane/ui/pages/main_page.dart';
 import 'package:airplane/ui/pages/seat_selection_page.dart';
+import 'package:airplane/ui/pages/sign_in_page.dart';
 import 'package:airplane/ui/pages/sign_up_page.dart';
 import 'package:airplane/ui/pages/splash_page.dart';
 import 'package:airplane/ui/pages/success_checkout_page.dart';
@@ -29,7 +32,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => PageCubit()),
-        BlocProvider(create: (context) => AuthCubit())
+        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => DestinationCubit()),
+        BlocProvider(create: (context) => AllDestinationCubit())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -37,9 +42,10 @@ class MyApp extends StatelessWidget {
           '/': (context) => SplashPage(),
           '/get-started': (context) => GetStartedPage(),
           '/sign-up': (context) => SignUpPage(),
+          '/sign-in': (context) => SignInPage(),
           '/bonus': (context) => BonusPage(),
           '/main': (context) => MainPage(),
-          '/detail': (context) => DetailPage(),
+          //'/detail': (context) => DetailPage(),
           '/seat-selection': (context) => SeatSelectionPage(),
           '/checkout': (context) => CheckoutPage(),
           '/success-checkout': (context) => SuccessCheckoutPage(),
