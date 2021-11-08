@@ -4,6 +4,8 @@ import 'package:airplane/cubit/all_destination_cubit.dart';
 import 'package:airplane/cubit/auth_cubit.dart';
 import 'package:airplane/cubit/destination_cubit.dart';
 import 'package:airplane/cubit/page_cubit.dart';
+import 'package:airplane/cubit/seat_cubit.dart';
+import 'package:airplane/cubit/transaction_cubit.dart';
 import 'package:airplane/ui/pages/bonus_page.dart';
 import 'package:airplane/ui/pages/checkout_page.dart';
 import 'package:airplane/ui/pages/detail_page.dart';
@@ -34,7 +36,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => PageCubit()),
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => DestinationCubit()),
-        BlocProvider(create: (context) => AllDestinationCubit())
+        BlocProvider(create: (context) => AllDestinationCubit()),
+        BlocProvider(create: (context) => SeatCubit()),
+        BlocProvider(create: (context) => TransactionCubit())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -46,8 +50,8 @@ class MyApp extends StatelessWidget {
           '/bonus': (context) => BonusPage(),
           '/main': (context) => MainPage(),
           //'/detail': (context) => DetailPage(),
-          '/seat-selection': (context) => SeatSelectionPage(),
-          '/checkout': (context) => CheckoutPage(),
+          // '/seat-selection': (context) => SeatSelectionPage(),
+          // '/checkout': (context) => CheckoutPage(),
           '/success-checkout': (context) => SuccessCheckoutPage(),
         },
       ),
