@@ -1,4 +1,4 @@
-# airplane (ON PROGRESS)
+# airplane
 
 A sample app to practice consume API and  BLOC state management with flutter.
 
