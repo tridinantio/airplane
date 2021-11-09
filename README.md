@@ -4,7 +4,10 @@
 
 
 
-[![Watch the video](https://youtu.be/SB_FH04LNTg)
+https://user-images.githubusercontent.com/93133790/140860054-7532a1ef-672e-4238-9948-1b1e9ec4c36c.mp4
+
+
+
 
 
 A sample app to practice consume API and  BLOC state management with flutter.
