@@ -116,6 +116,11 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    "New This Year",
+                    style: blackTextStyle.copyWith(
+                        fontSize: 18, fontWeight: semiBold),
+                  ),
                   Column(
                     children:
                         state.destinations.map((DestinationModel destinations) {
