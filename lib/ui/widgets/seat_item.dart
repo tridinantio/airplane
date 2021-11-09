@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:airplane/cubit/seat_cubit.dart';
 import 'package:airplane/shared/theme.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,8 @@ class SeatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Random random = new Random();
+
     bool isSelected = context.watch<SeatCubit>().isSelected(id);
     backgroundColor() {
       if (!isAvailable) {

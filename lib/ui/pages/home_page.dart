@@ -1,3 +1,4 @@
+import 'package:airplane/cubit/all_destination_cubit.dart';
 import 'package:airplane/cubit/auth_cubit.dart';
 import 'package:airplane/cubit/destination_cubit.dart';
 import 'package:airplane/models/destination_model.dart';
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     context.read<DestinationCubit>().fetchDestination();
+    context.read<AllDestinationCubit>().fetchAllDestination();
 
     super.initState();
   }
@@ -74,67 +76,68 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    Widget popularDestinations(List<DestinationModel> destinations) {
-      return Container(
-        margin: EdgeInsets.only(top: 30),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: destinations.map((DestinationModel destination) {
-              return DestinationCard(destination);
-            }).toList(),
-          ),
-        ),
+    Widget popularDestinations() {
+      return BlocBuilder<DestinationCubit, DestinationState>(
+        builder: (context, state) {
+          if (state is DestinationSuccess) {
+            return Container(
+              margin: EdgeInsets.only(top: 30),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children:
+                      state.destinations.map((DestinationModel destination) {
+                    return DestinationCard(destination);
+                  }).toList(),
+                ),
+              ),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                color: primaryColor,
+              ),
+            );
+          }
+        },
       );
     }
 
-    Widget newDestination(List<DestinationModel> destinations) {
-      return Container(
-        margin: EdgeInsets.only(
-            top: 30, left: defaultMargin, right: defaultMargin, bottom: 100),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "New This Year",
-              style:
-                  blackTextStyle.copyWith(fontSize: 18, fontWeight: semiBold),
-            ),
-            Column(
-              children: destinations.map((DestinationModel destinations) {
-                return DestinationTile(destination: destinations);
-              }).toList(),
-            ),
-          ],
-        ),
+    Widget newDestination() {
+      return BlocBuilder<AllDestinationCubit, AllDestinationState>(
+        builder: (context, state) {
+          if (state is AllDestinationSuccess) {
+            return Container(
+              margin: EdgeInsets.only(
+                  top: 30,
+                  left: defaultMargin,
+                  right: defaultMargin,
+                  bottom: 100),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    children:
+                        state.destinations.map((DestinationModel destinations) {
+                      return DestinationTile(destination: destinations);
+                    }).toList(),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                color: primaryColor,
+              ),
+            );
+          }
+        },
       );
     }
 
-    return BlocConsumer<DestinationCubit, DestinationState>(
-      listener: (context, state) {
-        if (state is DestinationFailed) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(backgroundColor: redColor, content: Text(state.error)));
-        }
-      },
-      builder: (context, state) {
-        if (state is DestinationSuccess) {
-          print(state.destinations);
-          return ListView(
-            children: [
-              header(),
-              popularDestinations(state.destinations),
-              newDestination(state.destinations)
-            ],
-          );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(
-              color: primaryColor,
-            ),
-          );
-        }
-      },
+    return ListView(
+      children: [header(), popularDestinations(), newDestination()],
     );
   }
 }
